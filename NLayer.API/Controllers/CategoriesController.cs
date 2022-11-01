@@ -49,8 +49,20 @@ namespace NLayer.API.Controllers
             return CreateActionResult(CustomResponseDto<NoContentDto>.Success(200));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CategoryDto categoryDto)
+        {
+            var category = await _categoryService.AddAsync(_mapper.Map<Category>(categoryDto));
+            var newCategoryDto = _mapper.Map<CategoryDto>(category);
+            return CreateActionResult(CustomResponseDto<CategoryDto>.Success(201, newCategoryDto));
+        }
 
-
+        [HttpPut]
+        public async Task<IActionResult> CategoryUpdate(CategoryDto categoryDto)
+        {
+             await _categoryService.UpdateAsync(_mapper.Map<Category>(categoryDto));
+            return CreateActionResult(CustomResponseDto<NoContentDto>.Success(200));
+        }
        
     }
 }
